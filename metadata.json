@@ -1,0 +1,8 @@
+{
+  "name": "CHAOS ROOM",
+  "description": "A high-energy, multiplayer party game where a chaotic AI Game Master challenges you and your friends to weird, creative, and fast-paced micro-games.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
