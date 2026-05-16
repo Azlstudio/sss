@@ -20,7 +20,7 @@
                 Margin="20,30,20,20"
                 FontSize="20"
                 FontWeight="Bold"
-                Text="SA MULTIPLAYER" />
+                Text="GTA SA MULTIPLAYER" />
 
             <!-- Status Info -->
             <Border
@@ -64,7 +64,7 @@
                 Margin="10,10,10,0"
                 Padding="15,10"
                 Background="#007ACC"
-                Content="🏠 Home"
+                Content="Home"
                 Click="BtnHome_Click" />
 
             <Button
@@ -72,7 +72,7 @@
                 Margin="10,5,10,0"
                 Padding="15,10"
                 Background="#2D2D30"
-                Content="🔍 Servidores"
+                Content="Browse Servers"
                 Click="BtnServers_Click" />
 
             <Button
@@ -80,7 +80,7 @@
                 Margin="10,5,10,0"
                 Padding="15,10"
                 Background="#2D2D30"
-                Content="⭐ Favoritos"
+                Content="Favorites"
                 Click="BtnFavorites_Click" />
 
             <Separator Margin="15,20" Background="#3E3E42" />
@@ -90,7 +90,7 @@
                 Margin="10,10,10,0"
                 Padding="15,10"
                 Background="#2D2D30"
-                Content="⚙️ Configuración"
+                Content="Settings"
                 Click="BtnSettings_Click" />
 
             <!-- Control Buttons -->
@@ -98,14 +98,14 @@
                 <Button
                     Padding="15,10"
                     Background="#FF6B6B"
-                    Content="❌ Salir del Juego"
+                    Content="Exit Game"
                     Click="BtnExitGame_Click" />
 
                 <Button
                     Margin="0,10,0,0"
                     Padding="15,10"
                     Background="#2D2D30"
-                    Content="⚠️ Reportar"
+                    Content="Report Issue"
                     Click="BtnReport_Click" />
             </StackPanel>
         </StackPanel>
@@ -126,7 +126,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Foreground="#FFFFFF"
-                        Text="📊 Servidor" />
+                        Text="Server Information" />
 
                     <Border
                         Margin="15,0,15,15"
@@ -182,7 +182,7 @@
                         FontSize="14"
                         FontWeight="Bold"
                         Foreground="#FFFFFF"
-                        Text="💬 Chat" />
+                        Text="Chat" />
 
                     <ListBox
                         x:Name="ChatBox"
@@ -217,7 +217,7 @@
                             Grid.Column="1"
                             Margin="5,0,0,0"
                             Background="#007ACC"
-                            Content="➤"
+                            Content="Send"
                             Click="BtnSendChat_Click" />
                     </Grid>
 
@@ -227,7 +227,7 @@
                         FontSize="12"
                         FontWeight="Bold"
                         Foreground="#FFFFFF"
-                        Text="👥 Jugadores" />
+                        Text="Online Players" />
 
                     <ListBox
                         x:Name="PlayersList"
@@ -292,14 +292,14 @@
                         <Button
                             Padding="20,12"
                             Background="#007ACC"
-                            Content="🏠 Ir a Home"
+                            Content="Back to Home"
                             Click="BtnHome_Click" />
 
                         <Button
                             Margin="15,0,0,0"
                             Padding="20,12"
                             Background="#007ACC"
-                            Content="🔍 Buscar Servidores"
+                            Content="Search Servers"
                             Click="BtnServers_Click" />
                     </StackPanel>
                 </StackPanel>
