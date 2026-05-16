@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest version="1.0">
+    <!--
+    GTAS Multiplayer Script Manifest
+    Sistema superior al meta.xml de MTA
+    Soporta Lua scripting, configuración y validación
+    -->
+
+    <!-- Información del Script/Recurso -->
+    <info>
+        <name>Mi Primer Script</name>
+        <author>MiNombre</author>
+        <version>1.0.0</version>
+        <description>Script de ejemplo para GTAS Multiplayer</description>
+        <type>gamemode</type>  <!-- gamemode, script, tool, library -->
+        <category>Gameplay</category>
+        <tags>
+            <tag>RP</tag>
+            <tag>Custom</tag>
+        </tags>
+    </info>
+
+    <!-- Configuración del Script -->
+    <config>
+        <!-- Máximos -->
+        <max_players>100</max_players>
+        <max_vehicles>500</max_vehicles>
+        <max_objects>1000</max_objects>
+
+        <!-- Networking -->
+        <update_rate>100</update_rate>  <!-- milliseconds entre updates -->
+        <bandwidth_limit>1024</bandwidth_limit>  <!-- KB/s por jugador -->
+
+        <!-- Features -->
+        <feature name="voice_chat">true</feature>
+        <feature name="vehicles">true</feature>
+        <feature name="gangs">true</feature>
+        <feature name="economy">true</feature>
+    </config>
+
+    <!-- Scripts Lua -->
+    <scripts>
+        <!-- Server-side scripts (ejecutan en el servidor, nunca se envían a clientes) -->
+        <script>
+            <file>scripts/server/main.lua</file>
+            <type>server</type>
+            <priority>1</priority>  <!-- 1=highest, orden de ejecución -->
+            <timeout>5000</timeout>  <!-- ms para que cargue -->
+        </script>
+
+        <script>
+            <file>scripts/server/database.lua</file>
+            <type>server</type>
+            <priority>0</priority>  <!-- Cargar primero -->
+        </script>
+
+        <script>
+            <file>scripts/server/events.lua</file>
+            <type>server</type>
+            <priority>2</priority>
+        </script>
+
+        <!-- Client-side scripts (descargan a cada jugador) -->
+        <script>
+            <file>scripts/client/main.lua</file>
+            <type>client</type>
+            <cache>true</cache>  <!-- Guardar en disco -->
+            <priority>1</priority>
+        </script>
+
+        <script>
+            <file>scripts/client/hud.lua</file>
+            <type>client</type>
+            <cache>true</cache>
+            <priority>2</priority>
+        </script>
+
+        <script>
+            <file>scripts/client/render.lua</file>
+            <type>client</type>
+            <cache>false</cache>  <!-- No cachear, cargar cada vez -->
+            <priority>3</priority>
+        </script>
+
+        <!-- Shared scripts (cargan en server y client) -->
+        <script>
+            <file>scripts/shared/constants.lua</file>
+            <type>shared</type>
+        </script>
+
+        <script>
+            <file>scripts/shared/utils.lua</file>
+            <type>shared</type>
+        </script>
+    </scripts>
+
+    <!-- Dependencias de otros scripts -->
+    <dependencies>
+        <dependency>
+            <name>database</name>
+            <version>1.0.0</version>
+            <required>true</required>  <!-- Debe estar presente para funcionar -->
+        </dependency>
+
+        <dependency>
+            <name>accounts</name>
+            <version>1.5.0</version>
+            <required>true</required>
+        </dependency>
+
+        <dependency>
+            <name>utils</name>
+            <version>2.0.0</version>
+            <required>false</required>  <!-- Opcional -->
+        </dependency>
+    </dependencies>
+
+    <!-- Funciones Exportadas (para uso por otros scripts) -->
+    <exports>
+        <export>
+            <function>getPlayerMoney</function>
+            <parameters>player</parameters>
+            <returns>number</returns>
+            <type>server</type>
+        </export>
+
+        <export>
+            <function>setPlayerMoney</function>
+            <parameters>player, amount</parameters>
+            <type>server</type>
+        </export>
+
+        <export>
+            <function>addPlayerMoney</function>
+            <parameters>player, amount</parameters>
+            <type>server</type>
+        </export>
+
+        <export>
+            <function>getPlayerJobs</function>
+            <parameters>player</parameters>
+            <returns>table</returns>
+            <type>server</type>
+        </export>
+    </exports>
+
+    <!-- Eventos Personalizados -->
+    <events>
+        <!-- Server events -->
+        <event>
+            <name>onPlayerMoneyChange</name>
+            <type>server</type>
+            <parameters>player, oldAmount, newAmount</parameters>
+            <can_trigger_from_client>false</can_trigger_from_client>
+        </event>
+
+        <event>
+            <name>onPlayerJobChange</name>
+            <type>server</type>
+            <parameters>player, oldJob, newJob</parameters>
+            <can_trigger_from_client>false</can_trigger_from_client>
+        </event>
+
+        <event>
+            <name>onPlayerLogin</name>
+            <type>server</type>
+            <parameters>player, username</parameters>
+            <can_trigger_from_client>true</can_trigger_from_client>
+        </event>
+
+        <!-- Client events -->
+        <event>
+            <name>onHUDUpdate</name>
+            <type>client</type>
+            <parameters>data</parameters>
+            <can_trigger_from_server>true</can_trigger_from_server>
+        </event>
+
+        <event>
+            <name>onPlayerSpotted</name>
+            <type>client</type>
+            <parameters>player, distance</parameters>
+        </event>
+    </events>
+
+    <!-- Recursos (archivos adicionales) -->
+    <resources>
+        <!-- Modelos custom -->
+        <model>
+            <file>models/car.dff</file>
+            <id>490</id>  <!-- Reemplaza el modelo 490 de GTA -->
+            <texture>models/car.txd</texture>
+        </model>
+
+        <!-- Sonidos -->
+        <sound>
+            <file>sounds/notification.mp3</file>
+            <id>notification_sound</id>
+        </sound>
+
+        <!-- Imágenes para GUI -->
+        <image>
+            <file>images/logo.png</file>
+            <id>logo</id>
+        </image>
+
+        <!-- Archivos de datos -->
+        <data>
+            <file>data/config.json</file>
+            <access>server</access>
+        </data>
+    </resources>
+
+    <!-- Configuración de ACL (Access Control List) -->
+    <acl>
+        <!-- Grupos de permisos -->
+        <group>
+            <name>admin</name>
+            <permissions>
+                <permission>script.start</permission>
+                <permission>script.stop</permission>
+                <permission>kick.player</permission>
+                <permission>ban.player</permission>
+            </permissions>
+        </group>
+
+        <group>
+            <name>moderator</name>
+            <permissions>
+                <permission>kick.player</permission>
+                <permission>mute.player</permission>
+                <permission>warn.player</permission>
+            </permissions>
+        </group>
+
+        <group>
+            <name>player</name>
+            <permissions>
+                <permission>chat.send</permission>
+                <permission>move</permission>
+            </permissions>
+        </group>
+    </acl>
+
+    <!-- Anti-Cheat / Seguridad -->
+    <security>
+        <anti_cheat>
+            <enabled>true</enabled>
+            <level>2</level>  <!-- 0=None, 1=Basic, 2=Advanced, 3=Strict -->
+
+            <!-- Detecciones específicas -->
+            <detection>
+                <name>speed_hack</name>
+                <enabled>true</enabled>
+                <threshold>250</threshold>  <!-- velocidad máxima permitida km/h -->
+            </detection>
+
+            <detection>
+                <name>teleport_hack</name>
+                <enabled>true</enabled>
+                <threshold>100</threshold>  <!-- distancia máxima en un frame -->
+            </detection>
+
+            <detection>
+                <name>health_hack</name>
+                <enabled>true</enabled>
+            </detection>
+
+            <detection>
+                <name>weapon_hack</name>
+                <enabled>true</enabled>
+            </detection>
+        </anti_cheat>
+
+        <!-- Validación de datos -->
+        <validation>
+            <client_prediction>true</client_prediction>  <!-- Permitir predicción del cliente -->
+            <server_override>true</server_override>  <!-- Servidor siempre gana en conflictos -->
+            <timeout>5000</timeout>  <!-- ms para respuesta del servidor -->
+        </validation>
+    </security>
+
+    <!-- Configuración de Base de Datos -->
+    <database>
+        <type>sqlite</type>  <!-- sqlite, mysql, postgresql -->
+        <host>localhost</host>
+        <port>3306</port>
+        <database>gtas_db</database>
+        <username>root</username>
+        <password>password</password>
+        <pool_size>10</pool_size>
+    </database>
+
+    <!-- Logging -->
+    <logging>
+        <level>info</level>  <!-- debug, info, warning, error -->
+        <file>logs/script.log</file>
+        <max_size>10MB</max_size>
+        <backup_count>5</backup_count>
+    </logging>
+
+    <!-- Validación -->
+    <validation>
+        <check_syntax>true</check_syntax>
+        <check_performance>true</check_performance>
+        <max_execution_time>10000</max_execution_time>  <!-- ms -->
+    </validation>
+</manifest>

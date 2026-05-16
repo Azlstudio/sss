@@ -1,0 +1,8 @@
+<Page x:Class="GTASALauncher.Pages.RecentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      Background="#1E1E1E">
+    <Grid>
+        <TextBlock Margin="30,30,30,30" Foreground="#FFFFFF" FontSize="14"
+                   Text="Los servidores que visitaste recientemente aparecerán aquí." />
+    </Grid>
+</Page>

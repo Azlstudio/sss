@@ -1,0 +1,115 @@
+╔════════════════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                            ║
+║                           GTA SAN ANDREAS - MULTIPLAYER UI                               ║
+║                                                                                            ║
+║                                                                                            ║
+║  ┌──────────────────────────────────┐                                                    ║
+║  │ ● Ping: 45ms | Jugadores: 5      │   ← STATUS BAR (Top-Left)                        ║
+║  │ Estado: Conectado                 │                                                    ║
+║  └──────────────────────────────────┘                                                    ║
+║                                                                                            ║
+║                                                          ┌────────────────────────────┐   ║
+║                                                          │ JUGADORES (5)              │   ║
+║                                                          ├────────────────────────────┤   ║
+║                                                          │ Player1      Salud: 100%  │   ║
+║                                                          │ Player2      Salud: 85%   │   ║
+║                                                          │ Player3      Salud: 45%   │   ║
+║                                                          │ Player4      Salud: 92%   │   ║
+║                                                          │ Player5      Salud: 30%   │   ║
+║                                    Distancia: 250m                                    │   ║
+║                                                          └────────────────────────────┘   ║
+║                                                                                            ║
+║                                                 ↑ NORTE                                   ║
+║                                         ┌───────────────────┐                            ║
+║                                         │   MINI-MAPA       │                            ║
+║                                         │    ⚪ (TÚ)        │                            ║
+║                                         │  •    • (Otros)   │                            ║
+║                                         │ Escala: 1:1000    │                            ║
+║                                         └───────────────────┘                            ║
+║                                                                                            ║
+║                         ┌──────────────────────────────────────────────────┐             ║
+║                         │ CHAT                                             │             ║
+║                         ├──────────────────────────────────────────────────┤             ║
+║                         │ [12:34] Player1: Hola a todos! Como estan?     │             ║
+║                         │ [12:35] Player2: Todo bien!                    │             ║
+║                         │ [SYSTEM] Player3 se unio al servidor            │             ║
+║                         │                                                  │             ║
+║                         │ Escribe aquí... _                                │             ║
+║                         └──────────────────────────────────────────────────┘             ║
+║                                                                                            ║
+║  ┌─────────────────────────────┐                                                         ║
+║  │ POSICIÓN:                   │   ← PLAYER INFO (Bottom-Left)                          ║
+║  │ X: 2048.50  Y: 1950.75      │                                                         ║
+║  │ Z: 10.50                    │                                                         ║
+║  │                             │                                                         ║
+║  │ SALUD: ▓▓▓▓▓▓▓▓░░ 80%      │                                                         ║
+║  │ ARMADURA: ▓▓▓░░░░░░░ 30%   │                                                         ║
+║  │ PING: 45ms                  │                                                         ║
+║  └─────────────────────────────┘                                                         ║
+║                                                                                            ║
+║  Controles: F1=UI  T=Chat  M=Mapa  P=Jugadores  ESC=Cerrar                              ║
+║                                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════════════════════╝
+
+
+DESGLOSE DE ELEMENTOS:
+
+1. STATUS BAR (Esquina Superior Izquierda)
+   ├─ Indicador de conexión (● = Conectado)
+   ├─ Ping en ms
+   ├─ Número de jugadores conectados
+   └─ Estado de conexión
+
+2. PLAYER LIST (Lado Derecho)
+   ├─ Nombre del jugador
+   ├─ Porcentaje de salud
+   ├─ Distancia al jugador
+   └─ Color de salud (Verde/Amarillo/Rojo)
+
+3. MINI-MAP (Esquina Inferior Derecha)
+   ├─ ⚪ = Tu posición (centro)
+   ├─ • = Otros jugadores
+   ├─ Rosa = Dirección (arriba = norte)
+   └─ Escala del mapa
+
+4. CHAT (Centro Inferior)
+   ├─ Últimos 10 mensajes
+   ├─ Timestamp [HH:MM]
+   ├─ Nombre del jugador
+   ├─ Mensaje
+   ├─ [SYSTEM] para eventos
+   └─ Campo de entrada
+
+5. PLAYER INFO (Esquina Inferior Izquierda)
+   ├─ Coordenadas X, Y, Z
+   ├─ Barra de salud visual
+   ├─ Barra de armadura visual
+   ├─ Ping actual
+   └─ Arma equipada [munición]
+
+CÓDIGO DE COLORES:
+
+Salud:
+  ▓▓▓▓▓▓▓▓▓░ (Verde)      → 90-100%
+  ▓▓▓▓▓▓░░░░ (Verde)      → 70-89%
+  ▓▓▓▓░░░░░░ (Amarillo)   → 50-69%
+  ▓▓░░░░░░░░ (Naranja)    → 25-49%
+  ░░░░░░░░░░ (Rojo)       → 1-24%
+
+Conexión:
+  ● Verde    → Conectado (Ping < 100ms)
+  ● Amarillo → Advertencia (Ping 100-200ms)
+  ● Rojo     → Crítico (Ping > 200ms)
+
+ANIMACIONES:
+
+Transiciones:
+  - Fade In/Out: 200ms
+  - Slide: 300ms
+  - Hover: 100ms
+
+Pulsos:
+  - Conectado: Verde suave cada 1s
+  - Desconectado: Rojo cada 500ms
+  - Crítico: Rojo cada 250ms
+
