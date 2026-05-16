@@ -83,8 +83,8 @@ namespace GTASALauncher
             {
                 var presence = new RichPresence()
                 {
-                    Details = "Browsing Servers",
-                    State = "On Launcher",
+                    Details = "Buscando Servidores",
+                    State = "En Inicio",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
@@ -95,12 +95,12 @@ namespace GTASALauncher
                     Timestamps = Timestamps.Now,
                     Buttons = new Button[]
                     {
-                        new Button() { Label = "Download NGR", Url = "https://ngr.launcher" }
+                        new Button() { Label = "Descargar NGR", Url = "https://ngr.launcher" }
                     }
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine("[Discord RPC] Status: On Launcher");
+                Console.WriteLine("[Discord RPC] Status: En Inicio");
             }
             catch (Exception ex)
             {
@@ -120,20 +120,20 @@ namespace GTASALauncher
             {
                 var presence = new RichPresence()
                 {
-                    Details = $"Joining {serverName}",
-                    State = "Loading...",
+                    Details = $"Uniéndose a {serverName}",
+                    State = "Entrando A Servidor",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
                         LargeImageText = "NGR Launcher",
                         SmallImageKey = "loading",
-                        SmallImageText = "Connecting"
+                        SmallImageText = "Conectando"
                     },
                     Timestamps = Timestamps.Now
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine($"[Discord RPC] Status: Loading {serverName}");
+                Console.WriteLine($"[Discord RPC] Status: Entrando A Servidor {serverName}");
             }
             catch (Exception ex)
             {
@@ -151,10 +151,14 @@ namespace GTASALauncher
 
             try
             {
+                var playingMessages = new[] { "Roliando En", "Jugando En", "Conectado A", "En Vivo En" };
+                var random = new Random();
+                var playingMessage = playingMessages[random.Next(playingMessages.Length)];
+
                 var presence = new RichPresence()
                 {
-                    Details = $"Playing on {serverName}",
-                    State = $"Players: {playerCount}/{maxPlayers} | Ping: {ping}ms",
+                    Details = $"{playingMessage} {serverName}",
+                    State = $"Jugadores: {playerCount}/{maxPlayers} | Ping: {ping}ms",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
@@ -167,14 +171,14 @@ namespace GTASALauncher
                     {
                         new Button()
                         {
-                            Label = $"Join {serverName}",
+                            Label = $"Unirse A {serverName}",
                             Url = $"ngr://join/{serverName.Replace(" ", "%20")}"
                         }
                     }
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine($"[Discord RPC] Status: Playing on {serverName}");
+                Console.WriteLine($"[Discord RPC] Status: {playingMessage} {serverName}");
             }
             catch (Exception ex)
             {
@@ -194,20 +198,20 @@ namespace GTASALauncher
             {
                 var presence = new RichPresence()
                 {
-                    Details = "Configuring Settings",
-                    State = "Graphics Settings",
+                    Details = "Configurando Gráficos",
+                    State = "En Configuración",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
                         LargeImageText = "NGR Launcher",
                         SmallImageKey = "settings",
-                        SmallImageText = "Settings"
+                        SmallImageText = "Configuración"
                     },
                     Timestamps = Timestamps.Now
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine("[Discord RPC] Status: In Settings");
+                Console.WriteLine("[Discord RPC] Status: En Configuración");
             }
             catch (Exception ex)
             {
@@ -227,20 +231,20 @@ namespace GTASALauncher
             {
                 var presence = new RichPresence()
                 {
-                    Details = "Viewing Favorites",
-                    State = "Favorite Servers",
+                    Details = "Viendo Favoritos",
+                    State = "En Favoritos",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
                         LargeImageText = "NGR Launcher",
                         SmallImageKey = "star",
-                        SmallImageText = "Favorites"
+                        SmallImageText = "Favoritos"
                     },
                     Timestamps = Timestamps.Now
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine("[Discord RPC] Status: In Favorites");
+                Console.WriteLine("[Discord RPC] Status: En Favoritos");
             }
             catch (Exception ex)
             {
@@ -260,8 +264,8 @@ namespace GTASALauncher
             {
                 var presence = new RichPresence()
                 {
-                    Details = "Idle",
-                    State = "No server selected",
+                    Details = "En Pausa",
+                    State = "Sin Servidor Seleccionado",
                     Assets = new Assets()
                     {
                         LargeImageKey = "ngr_launcher",
@@ -271,7 +275,7 @@ namespace GTASALauncher
                 };
 
                 client.SetPresence(presence);
-                Console.WriteLine("[Discord RPC] Status: Idle");
+                Console.WriteLine("[Discord RPC] Status: En Pausa");
             }
             catch (Exception ex)
             {
