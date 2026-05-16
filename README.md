@@ -9,23 +9,31 @@ Prototipo funcional de un servidor y cliente multijugador para GTA San Andreas. 
 - ✅ Sincronización de posiciones de jugadores
 - ✅ Protocolo de networking personalizado
 - ✅ Soporte para hasta 32 jugadores simultáneos
-- ⏳ Inyección en GTA San Andreas (en desarrollo)
+- ✅ DLL Injection en GTA San Andreas
+- ✅ Interfaz gráfica in-game profesional
+- ✅ Captura de datos de memoria del juego
+- ✅ Mini-mapa, chat, y lista de jugadores
 
 ## Estructura del Proyecto
 
 ```
 .
 ├── include/
-│   └── protocol.h          # Definición del protocolo compartido
+│   └── protocol.h              # Protocolo de networking
 ├── src/
 │   ├── server/
-│   │   └── server.cpp      # Servidor multijugador
+│   │   └── server.cpp          # Servidor UDP multijugador
 │   ├── client/
-│   │   └── client.cpp      # Cliente multijugador
+│   │   └── client.cpp          # Cliente de prueba
 │   └── inject/
-│       └── (DLL injection code)
-├── CMakeLists.txt          # Build configuration
-└── build.bat               # Script de compilación (Windows)
+│       ├── inject.cpp          # DLL principal (se ejecuta en GTA SA)
+│       ├── launcher.cpp        # Inyector de DLL
+│       ├── gta_memory.h/cpp    # Acceso a memoria de GTA SA
+│       └── ui.h/cpp            # Interfaz gráfica in-game
+├── CMakeLists.txt              # Build configuration
+├── build.bat                   # Script de compilación
+├── INJECTION_GUIDE.md          # Guía de inyección
+└── UI_DESIGN.md                # Diseño de la interfaz
 ```
 
 ## Requisitos
@@ -52,23 +60,35 @@ cmake --build . --config Release
 
 ## Uso
 
-### 1. Iniciar el Servidor
+### Opción 1: Servidor + Cliente Standalone
 
 ```bash
+# Terminal 1 - Servidor
 sa_server.exe
-```
 
-El servidor escuchará en `127.0.0.1:8888` (o en toda la red local `0.0.0.0:8888`)
-
-### 2. Conectar Cliente(s)
-
-En otra terminal/PC en la misma red:
-
-```bash
+# Terminal 2 - Cliente
 sa_client.exe
 ```
 
-El cliente se conectará automáticamente al servidor en `127.0.0.1:8888` y simulará movimiento.
+### Opción 2: Inyección en GTA San Andreas (Recomendado)
+
+```bash
+# Terminal 1 - Servidor
+sa_server.exe
+
+# GTA San Andreas - Abre el juego normalmente
+
+# Terminal 2 - Launcher (Inyector)
+sa_launcher.exe
+```
+
+La DLL se inyectará automáticamente y la UI aparecerá en el juego.
+
+**Controles:**
+- **F1** - Mostrar/Ocultar UI
+- **T** - Chat
+- **M** - Mini-mapa
+- **P** - Lista de jugadores
 
 ## Protocolo de Networking
 
@@ -83,11 +103,14 @@ El cliente se conectará automáticamente al servidor en `127.0.0.1:8888` y simu
 
 ## Próximos Pasos
 
-1. **Inyección en GTA SA**: Crear DLL que se inyecta en GTA SA
-2. **Captura de Datos**: Hook de memoria para capturar posición real del jugador
-3. **Renderizado**: Mostrar otros jugadores en el juego
-4. **Sincronización de Acciones**: Disparos, golpes, etc.
-5. **Persistencia**: Base de datos para cuentas de jugadores
+- [ ] **Renderizado de Jugadores**: Crear peds para otros jugadores en el mapa
+- [ ] **Sincronización de Vehículos**: Sincronizar uso de vehículos
+- [ ] **Sincronización de Animaciones**: Animar acciones (disparos, golpes, etc)
+- [ ] **Sistema de Salas**: Crear salas/servidores privados
+- [ ] **Base de Datos**: Persistencia de datos de jugadores
+- [ ] **Sistema de Equipos**: Implementar modos Cops vs Robbers, TDM
+- [ ] **Voz**: Comunicación de voz en-game
+- [ ] **Antitrampas**: Sistema de detección de hackers
 
 ## Configuración para Red WiFi Local
 
@@ -103,6 +126,42 @@ Ejemplo: Si el servidor está en IP `192.168.1.100`:
 client.Connect("192.168.1.100", "Player1");
 ```
 
+## Documentación Adicional
+
+- [**INJECTION_GUIDE.md**](INJECTION_GUIDE.md) - Guía completa de inyección y troubleshooting
+- [**UI_DESIGN.md**](UI_DESIGN.md) - Diseño detallado de la interfaz
+- [**QUICKSTART.md**](QUICKSTART.md) - Inicio rápido del servidor/cliente
+
+## Componentes Clave
+
+| Componente | Descripción |
+|-----------|-----------|
+| `sa_server.exe` | Servidor UDP que sincroniza jugadores |
+| `sa_client.exe` | Cliente de prueba (no necesario si usas la DLL) |
+| `sa_launcher.exe` | Inyector de DLL en GTA SA |
+| `sa_inject.dll` | DLL que se ejecuta en GTA SA |
+
+## API de Red
+
+```cpp
+// Todos los paquetes usan UDP
+#define SERVER_PORT 8888
+#define PACKET_SIZE 256
+#define MAX_PLAYERS 32
+
+// Estructura de datos de jugador
+struct PlayerData {
+    uint32_t playerID;
+    char name[32];
+    Vector3 position;        // X, Y, Z
+    Vector3 rotation;        // Pitch, Yaw, Roll
+    uint32_t modelID;        // Skin del jugador
+    float health;            // 0-100
+};
+```
+
 ---
 
-**Estado:** Prototipo Funcional v0.1
+**Estado:** Prototipo Funcional v0.2 - DLL Injection & UI Completa
+**Última actualización:** 2026-05-16
+**Versión:** 0.2.0

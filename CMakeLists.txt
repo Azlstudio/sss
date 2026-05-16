@@ -22,5 +22,17 @@ if(WIN32)
     target_link_libraries(sa_client ws2_32)
 endif()
 
-# Inject DLL (future)
-# add_library(sa_inject SHARED src/inject/inject.cpp)
+# Inject DLL
+add_library(sa_inject SHARED src/inject/inject.cpp src/inject/gta_memory.cpp src/inject/ui.cpp)
+target_include_directories(sa_inject PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+if(WIN32)
+    target_link_libraries(sa_inject ws2_32)
+endif()
+
+# Launcher executable
+add_executable(sa_launcher src/inject/launcher.cpp)
+
+if(WIN32)
+    target_link_libraries(sa_launcher kernel32)
+endif()
