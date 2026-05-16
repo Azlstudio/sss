@@ -1,0 +1,35 @@
+<Page x:Class="GTASALauncher.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      Background="#1E1E1E">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="30">
+            <TextBlock FontSize="16" FontWeight="Bold" Foreground="#FFFFFF" Text="Configuración" />
+            <Separator Margin="0,15" Background="#3E3E42" />
+            
+            <TextBlock Margin="0,10,0,5" Foreground="#999999" Text="Nombre de Usuario" />
+            <TextBox Padding="10" Background="#3E3E42" Foreground="#FFFFFF" Text="Player1" />
+            
+            <TextBlock Margin="0,15,0,5" Foreground="#999999" Text="Tema" />
+            <ComboBox Padding="10" Background="#3E3E42" Foreground="#FFFFFF">
+                <ComboBoxItem>Oscuro</ComboBoxItem>
+                <ComboBoxItem>Claro</ComboBoxItem>
+            </ComboBox>
+            
+            <TextBlock Margin="0,15,0,5" Foreground="#999999" Text="Idioma" />
+            <ComboBox Padding="10" Background="#3E3E42" Foreground="#FFFFFF">
+                <ComboBoxItem>Español</ComboBoxItem>
+                <ComboBoxItem>Inglés</ComboBoxItem>
+            </ComboBox>
+            
+            <CheckBox Margin="0,15" Foreground="#FFFFFF">
+                <TextBlock Text="Conectar automáticamente al último servidor" />
+            </CheckBox>
+            
+            <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                <TextBlock Text="Habilitar notificaciones" />
+            </CheckBox>
+            
+            <Button Margin="0,20,0,0" Padding="20,12" Background="#007ACC" Content="💾 Guardar" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

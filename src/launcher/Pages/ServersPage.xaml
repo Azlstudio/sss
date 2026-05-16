@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="GTASALauncher.Pages.ServersPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="#1E1E1E">
+
+    <Grid>
+        <!-- Left Sidebar with Filters -->
+        <Grid Width="300" Background="#252526" HorizontalAlignment="Left">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="20">
+                    <!-- Title -->
+                    <TextBlock
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="#FFFFFF"
+                        Text="Filtros" />
+
+                    <Separator Margin="0,15" Background="#3E3E42" />
+
+                    <!-- Game Mode Filter -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="12"
+                        Foreground="#999999"
+                        Text="MODO DE JUEGO" />
+
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Role Play" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Team Deathmatch" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Sandbox" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Otros" />
+                    </CheckBox>
+
+                    <Separator Margin="0,15" Background="#3E3E42" />
+
+                    <!-- Player Count Filter -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="12"
+                        Foreground="#999999"
+                        Text="NÚMERO DE JUGADORES" />
+
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Vacíos (0-10)" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Pocas personas (10-30)" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Llenos (30+)" />
+                    </CheckBox>
+
+                    <Separator Margin="0,15" Background="#3E3E42" />
+
+                    <!-- Status Filter -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="12"
+                        Foreground="#999999"
+                        Text="ESTADO" />
+
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="En línea" />
+                    </CheckBox>
+                    <CheckBox Margin="0,5" Foreground="#FFFFFF">
+                        <TextBlock Text="Sin conexión" />
+                    </CheckBox>
+
+                    <Separator Margin="0,15" Background="#3E3E42" />
+
+                    <!-- Sort Options -->
+                    <TextBlock
+                        Margin="0,10,0,5"
+                        FontSize="12"
+                        Foreground="#999999"
+                        Text="ORDENAR POR" />
+
+                    <ComboBox
+                        Margin="0,5"
+                        Background="#3E3E42"
+                        Foreground="#FFFFFF">
+                        <ComboBoxItem>Jugadores (Descendente)</ComboBoxItem>
+                        <ComboBoxItem>Ping (Ascendente)</ComboBoxItem>
+                        <ComboBoxItem>Rating (Descendente)</ComboBoxItem>
+                        <ComboBoxItem>Nombre (A-Z)</ComboBoxItem>
+                    </ComboBox>
+
+                    <!-- Buttons -->
+                    <Button
+                        Margin="0,20,0,5"
+                        Padding="10,8"
+                        Background="#007ACC"
+                        Content="🔄 Actualizar"
+                        Click="BtnRefresh_Click" />
+
+                    <Button
+                        Margin="0,5,0,0"
+                        Padding="10,8"
+                        Background="#2D2D30"
+                        Content="🔄 Limpiar Filtros"
+                        Click="BtnClearFilters_Click" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- Server List -->
+        <StackPanel Margin="320,20,20,20">
+            <!-- Info Bar -->
+            <StackPanel
+                Margin="0,0,0,15"
+                HorizontalAlignment="Stretch"
+                Orientation="Horizontal">
+                <TextBlock
+                    Foreground="#999999"
+                    Text="{Binding ServerCount, StringFormat='Mostrando {0} servidores'}" />
+                <TextBlock
+                    Margin="20,0,0,0"
+                    Foreground="#666666"
+                    Text="(Haz doble click para conectar)" />
+            </StackPanel>
+
+            <!-- Server List -->
+            <ScrollViewer Height="650" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="ServerList" ItemsSource="{Binding Servers}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="0,0,0,10"
+                                Background="#252526"
+                                BorderBrush="#3E3E42"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Cursor="Hand"
+                                MouseDoubleClick="OnServerDoubleClick">
+                                <Grid Height="100" Padding="15">
+                                    <!-- Left Content -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <!-- Status Indicator -->
+                                        <Ellipse
+                                            Width="12"
+                                            Height="12"
+                                            Margin="0,0,15,0"
+                                            Fill="#00FF00"
+                                            VerticalAlignment="Top" />
+
+                                        <!-- Info -->
+                                        <StackPanel>
+                                            <TextBlock
+                                                FontSize="14"
+                                                FontWeight="Bold"
+                                                Foreground="#FFFFFF"
+                                                Text="{Binding Name}" />
+                                            <TextBlock
+                                                Margin="0,2,0,0"
+                                                FontSize="11"
+                                                Foreground="#999999"
+                                                Text="{Binding Description}" />
+
+                                            <!-- Tags -->
+                                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                                <ItemsControl ItemsSource="{Binding Tags}">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Border
+                                                                Margin="0,0,5,0"
+                                                                Padding="4,2"
+                                                                Background="#007ACC"
+                                                                CornerRadius="2">
+                                                                <TextBlock
+                                                                    FontSize="9"
+                                                                    Foreground="#FFFFFF"
+                                                                    Text="{Binding}" />
+                                                            </Border>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!-- Right Stats -->
+                                    <StackPanel
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <!-- Players -->
+                                        <StackPanel Margin="0,0,30,0" VerticalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="#00FF00"
+                                                Text="{Binding GetPlayersText}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="9"
+                                                Foreground="#888888"
+                                                Text="Jugadores" />
+                                        </StackPanel>
+
+                                        <!-- Ping -->
+                                        <StackPanel Margin="0,0,30,0" VerticalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="#FFFF00"
+                                                Text="{Binding PingMs, StringFormat='{0}ms'}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="9"
+                                                Foreground="#888888"
+                                                Text="Ping" />
+                                        </StackPanel>
+
+                                        <!-- Rating -->
+                                        <StackPanel Margin="0,0,30,0" VerticalAlignment="Center">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="12"
+                                                Foreground="#FFD700"
+                                                Text="{Binding Rating, StringFormat='{0:F1}⭐'}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                FontSize="9"
+                                                Foreground="#888888"
+                                                Text="{Binding RatingCount, StringFormat='({0})'}" />
+                                        </StackPanel>
+
+                                        <!-- Favorite Button -->
+                                        <Button
+                                            Margin="0,0,10,0"
+                                            Padding="8,5"
+                                            Background="#2D2D30"
+                                            Content="⭐"
+                                            Click="OnFavoriteClick" />
+
+                                        <!-- Connect Button -->
+                                        <Button
+                                            Padding="15,8"
+                                            Background="#007ACC"
+                                            Content="Conectar"
+                                            Click="OnConnectClick" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>
