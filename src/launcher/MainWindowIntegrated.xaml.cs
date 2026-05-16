@@ -11,6 +11,7 @@ namespace GTASALauncher
         private UserSettings currentSettings;
         private List<ServerData> allServers;
         private ServerData connectedServer;
+        private DiscordRPCManager discordRPC;
 
         public MainWindowIntegrated()
         {
@@ -22,6 +23,10 @@ namespace GTASALauncher
         {
             currentSettings = new UserSettings { Username = "Player1", AccountId = "123456" };
             LoadServersFromAPI();
+
+            // Initialize Discord RPC
+            discordRPC = new DiscordRPCManager();
+            discordRPC.UpdateStatusOnLauncher();
 
             // Initialize GameHost
             gameHost = new GameHost();
@@ -90,6 +95,7 @@ namespace GTASALauncher
             TxtGameInfo.Text = "Vuelve a Home - Selecciona un servidor";
             connectedServer = null;
             NoServerOverlay.Visibility = Visibility.Visible;
+            discordRPC?.UpdateStatusOnLauncher();
         }
 
         private void BtnServers_Click(object sender, RoutedEventArgs e)
@@ -104,15 +110,21 @@ namespace GTASALauncher
             {
                 ConnectToServer(allServers[0]);
             }
+            else
+            {
+                discordRPC?.UpdateStatusOnLauncher();
+            }
         }
 
         private void BtnFavorites_Click(object sender, RoutedEventArgs e)
         {
+            discordRPC?.UpdateStatusFavorites();
             MessageBox.Show("Favoritos - Próximamente", "Favoritos");
         }
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
+            discordRPC?.UpdateStatusSettings();
             MessageBox.Show("Configuración - Próximamente", "Configuración");
         }
 
@@ -123,6 +135,7 @@ namespace GTASALauncher
                 connectedServer = null;
                 NoServerOverlay.Visibility = Visibility.Visible;
                 TxtServerInfo.Text = "No conectado";
+                discordRPC?.UpdateStatusOnLauncher();
             }
         }
 
@@ -154,6 +167,8 @@ namespace GTASALauncher
 
             try
             {
+                discordRPC?.UpdateStatusLoading(server.Name);
+
                 connectedServer = server;
                 TxtServerInfo.Text = $"Conectado a {server.Name}";
                 TxtServerName.Text = server.Name;
@@ -162,6 +177,7 @@ namespace GTASALauncher
                 TxtGameInfo.Text = $"Conectado a {server.Name} | Ping: {server.PingMs}ms";
 
                 NoServerOverlay.Visibility = Visibility.Hidden;
+                discordRPC?.UpdateStatusPlaying(server.Name, server.CurrentPlayers, server.MaxPlayers, server.PingMs);
 
                 // Add to recent
                 if (!currentSettings.RecentServers.Contains(server.ServerId))
@@ -201,6 +217,7 @@ namespace GTASALauncher
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            discordRPC?.Disconnect();
             gameHost?.StopGame();
         }
     }
