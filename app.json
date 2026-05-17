@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "NextAI",
+    "slug": "nextai",
+    "version": "1.0.0",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTabletMode": true,
+      "bundleIdentifier": "com.nextai.app"
+    },
+    "android": {
+      "package": "com.nextai.app"
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "nextai",
+    "orientation": "portrait",
+    "primaryColor": "#000000",
+    "userInterfaceStyle": "dark"
+  }
+}

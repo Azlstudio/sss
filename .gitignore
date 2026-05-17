@@ -12,7 +12,26 @@ dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# Expo
+.expo
+.expo-shared
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build
+.env
+.env.local
+
+# Native
+ios/Pods
+ios/Podfile.lock
+android/.gradle
+android/local.properties
+
+# IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -22,3 +41,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.sublime-workspace
