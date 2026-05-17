@@ -10,7 +10,6 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             headerShown: false,
-            cardStyle: { backgroundColor: COLORS.background },
           }}
         >
           <Stack.Screen name="index" />

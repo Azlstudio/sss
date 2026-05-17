@@ -126,7 +126,7 @@ const ChatScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={[styles.container, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.background} />
+      <StatusBar hidden={false} />
 
       {/* Header */}
       <View style={styles.header}>
