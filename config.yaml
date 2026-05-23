@@ -1,0 +1,101 @@
+assistant:
+  name: "LocalAI Assistant"
+  version: "1.0.0"
+
+# Local LLM Configuration (Ollama)
+llm:
+  provider: "ollama"
+  base_url: "http://localhost:11434"
+  model: "mistral"  # or "llama2", "neural-chat"
+  parameters:
+    temperature: 0.7
+    top_p: 0.9
+    top_k: 40
+    max_tokens: 2048
+    repetition_penalty: 1.1
+
+# Embeddings Configuration
+embeddings:
+  model: "sentence-transformers/all-MiniLM-L6-v2"
+  device: "cuda"  # or "cpu"
+
+# Memory Configuration
+memory:
+  vector_db:
+    type: "chroma"
+    persist_directory: "./brain/vectors"
+
+  fact_store:
+    type: "sqlite"
+    path: "./brain/facts/knowledge.db"
+
+  conversation:
+    history_path: "./brain/conversations"
+    max_context_messages: 20
+    persistence: true
+
+  retrieval:
+    top_k: 5
+    similarity_threshold: 0.6
+    use_mmr: true  # Maximum Marginal Relevance
+
+# Specializations
+specialization:
+  domains:
+    - "fivem"
+    - "qbcore"
+    - "esx"
+    - "mta"
+    - "programming"
+    - "design"
+
+  training_data_path: "./brain/training_data"
+
+# File Operations Permissions
+permissions:
+  allowed_directories:
+    - "./workspace"
+    - "./brain"
+
+  allowed_operations:
+    - "read"
+    - "create"
+    - "edit"
+    - "delete"
+
+  require_confirmation:
+    - "delete"
+    - "edit_config"
+
+# Workspace
+workspace:
+  path: "./workspace"
+  auto_scan: true
+  max_project_size_mb: 500
+
+# Logging
+logging:
+  level: "INFO"
+  log_file: "./logs/assistant.log"
+  preserve_history: true
+
+# System Prompts
+system_prompts:
+  general: |
+    You are a specialized AI assistant running locally on the user's PC. You have persistent memory and learn from every interaction.
+
+    Guidelines:
+    - Think step-by-step before answering
+    - Reference relevant past knowledge when applicable
+    - Be precise and professional
+    - If uncertain, ask clarifying questions
+    - Always respect the user's privacy and security
+    - Do not make up information
+
+  reasoning: |
+    Before answering, break down the problem:
+    1. What is being asked?
+    2. What relevant knowledge do I have?
+    3. What step-by-step approach should I take?
+    4. What is the final answer?
+    5. Should I update my memory with new facts?
